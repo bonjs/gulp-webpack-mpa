@@ -1,12 +1,13 @@
 const webpack = require('webpack');
 const path = require('path');
 const fs = require('fs');
+const globby = require('globby');
 
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 const srcDir = path.resolve(__dirname, 'src');
 
-function getEntry() {
+function getEntry2() {
     let jsPath = path.resolve(srcDir, 'pages');
     let dirs = fs.readdirSync(jsPath);
     console.log(dirs);
@@ -27,21 +28,31 @@ function getEntry() {
     return files;
 }
 
+async function getEntry() {
+    var entries = await globby('./entry/src/**/index.js');
+    console.log('哈哈', entries)
+    return entries;
+}
+getEntry();
+
 module.exports = {
     mode: "development",
-    //devtool: "source-map",
+    devtool: "source-map",
     //entry: getEntry(),
     entry: {
-        'pages/index/vue.bindle': path.resolve(__dirname, 'src/pages/index/entry.js'),
-        'pages/a/vue.bindle': path.resolve(__dirname, 'src/pages/a/entry.js'),
+        'pages/main/vue.bindle': path.resolve(__dirname, './entry/src/pages/main/index.js'),
+        'pages/a/vue.bindle': path.resolve(__dirname, './entry/src/pages/a/index.js'),
     },
     output: {
         filename: "[name].js",
-        //path: path.resolve(__dirname, 'src')
+        path: path.resolve(__dirname, 'src')
         //path: path.resolve(__dirname, 'src')
     },
     resolve: {
         extensions: [".ts", ".tsx", ".js", ".json"]
+    },
+    externals: {
+        vue: 'Vue'
     },
     plugins: [
         new VueLoaderPlugin()
@@ -70,5 +81,11 @@ module.exports = {
             },
             {enforce: "pre", test: /\.js$/, loader: "source-map-loader"}
         ]
+    },
+    optimization: {
+		minimize: false, //是否进行代码压缩
+		runtimeChunk: {
+            name: 'runtime'
+		}
     }
 };

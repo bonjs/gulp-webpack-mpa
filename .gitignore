@@ -3,3 +3,4 @@
 node_modules
 dist
 vue.bindle.js
+*.map

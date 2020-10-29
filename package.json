@@ -13,6 +13,7 @@
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.1.0",
     "gulp": "^4.0.2",
+    "gulp-clean": "^0.4.0",
     "gulp-concat": "^2.6.1",
     "gulp-html-import": "^0.0.2",
     "gulp-rename": "^1.4.0",
@@ -25,5 +26,8 @@
     "vue-template-compiler": "^2.6.12",
     "webpack": "^4.35.3",
     "webpack-stream": "^5.2.1"
+  },
+  "dependencies": {
+    "globby": "^11.0.1"
   }
 }
