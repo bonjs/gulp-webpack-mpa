@@ -38,7 +38,7 @@ function getFolders(dir) {
 }
 
 gulp.task('watch', () => {
-    gulp.watch('./src/**/*',{}, gulp.task('webpack'));
+    gulp.watch(['./src/**/*', '!./src/**/vue.bindle.js'],{}, gulp.task('webpack'));
 });
 
 
