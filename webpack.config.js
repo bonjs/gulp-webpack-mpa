@@ -2,6 +2,8 @@ const webpack = require('webpack');
 const path = require('path');
 const fs = require('fs');
 
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+
 const srcDir = path.resolve(__dirname, 'src');
 
 function getEntry() {
@@ -27,11 +29,11 @@ function getEntry() {
 
 module.exports = {
     mode: "development",
-    devtool: "none",
+    //devtool: "source-map",
     //entry: getEntry(),
     entry: {
-        'pages/index/index': path.resolve(__dirname, 'src/pages/index/entry.js'),
-        'pages/a/index': path.resolve(__dirname, 'src/pages/a/entry.js'),
+        'pages/index/vue.bindle': path.resolve(__dirname, 'src/pages/index/entry.js'),
+        'pages/a/vue.bindle': path.resolve(__dirname, 'src/pages/a/entry.js'),
     },
     output: {
         filename: "[name].js",
@@ -41,9 +43,25 @@ module.exports = {
     resolve: {
         extensions: [".ts", ".tsx", ".js", ".json"]
     },
+    plugins: [
+        new VueLoaderPlugin()
+    ],
     module: {
         rules: [
-            {test: /\.ts?$/, loader: "awesome-typescript-loader"},
+            {
+				test: /\.js$/,
+				exclude: /node_modules/,
+				use: {
+					loader: "babel-loader",
+					query: {
+						presets: ['env'] //按照最新的ES6语法规则去转换
+					}
+				},
+			},
+            {
+                test: /\.vue$/,
+				use: ['vue-loader']
+            },
             {enforce: "pre", test: /\.js$/, loader: "source-map-loader"}
         ]
     }

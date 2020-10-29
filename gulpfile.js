@@ -37,4 +37,10 @@ function getFolders(dir) {
         });
 }
 
-gulp.task('default', gulp.parallel('webpack'));
+gulp.task('watch', () => {
+    gulp.watch('./src/**/*',{}, gulp.task('webpack'));
+});
+
+
+
+gulp.task('default', gulp.parallel('watch', 'webpack'));
