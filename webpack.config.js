@@ -53,10 +53,16 @@ module.exports = {
 				exclude: /node_modules/,
 				use: {
 					loader: "babel-loader",
-					query: {
-						presets: ['env'] //按照最新的ES6语法规则去转换
-					}
-				},
+					options: {
+                        presets: ['@babel/preset-env'],
+                        plugins: [
+                            '@babel/plugin-transform-runtime',
+                        //   'transform-vue-jsx',
+                        //   '@babel/plugin-syntax-jsx',
+                        //   '@babel/plugin-syntax-dynamic-import'
+                        ]
+                    }
+                },
 			},
             {
                 test: /\.vue$/,
